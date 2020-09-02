@@ -1,7 +1,7 @@
 from telegram.bot import Bot
 from telegram.utils.request import Request
 
-from vk_tg_resender.config import CONFIG
+from vk2tg_bot.config import CONFIG
 
 
 class Api:

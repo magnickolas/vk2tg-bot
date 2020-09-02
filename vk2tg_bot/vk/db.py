@@ -1,6 +1,6 @@
 from peewee import *
 
-from vk_tg_resender.db.db import BaseModel
+from vk2tg_bot.db.db import BaseModel
 
 
 class VKConversation(BaseModel):

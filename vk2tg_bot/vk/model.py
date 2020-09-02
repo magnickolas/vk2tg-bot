@@ -1,6 +1,6 @@
-from vk_tg_resender.vk.api import get_api
-from vk_tg_resender.vk.db import VKConversation
-from vk_tg_resender.vk.db import VKUser
+from vk2tg_bot.vk.api import get_api
+from vk2tg_bot.vk.db import VKConversation
+from vk2tg_bot.vk.db import VKUser
 
 
 class Model:

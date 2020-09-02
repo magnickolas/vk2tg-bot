@@ -1,6 +1,6 @@
 import vk_api
 
-from vk_tg_resender.config import CONFIG
+from vk2tg_bot.config import CONFIG
 
 
 def get_api():

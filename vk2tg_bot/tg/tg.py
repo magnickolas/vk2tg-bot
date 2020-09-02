@@ -1,4 +1,4 @@
-from vk_tg_resender.tg.api import get_api
+from vk2tg_bot.tg.api import get_api
 
 
 class Sender:

@@ -1,5 +1,6 @@
 from vk_tg_resender.vk.api import get_api
 from vk_tg_resender.vk.db import VKConversation
+from vk_tg_resender.vk.db import VKUser
 
 
 class Model:
@@ -7,7 +8,7 @@ class Model:
         self.api = get_api()
 
     def fetch_latest_messages_records(self, conversation_id):
-        conversation = VKConversation.get_or_none(VKConversation.id == conversation_id)
+        conversation = VKConversation.get_or_none(id=conversation_id)
         if not conversation:
             records = self.api.messages.getHistory(
                 offset=0, peer_id=conversation_id, count=5
@@ -37,3 +38,25 @@ class Model:
                 )
                 query.execute()
             return all_records
+
+    def get_conversation_members(self, conversation_id):
+        query = VKUser.select(VKUser.id, VKUser.first_name, VKUser.last_name).where(
+            VKUser.conversation_id == conversation_id
+        )
+        return [member for member in query]
+
+    def update_conversation_members(self, conversation_id):
+        response = self.api.messages.getConversationMembers(
+            peer_id=conversation_id, fields="id,first_name,last_name"
+        )
+        profiles = response["profiles"]
+        for profile in profiles:
+            id = profile["id"]
+            first_name = profile["first_name"]
+            last_name = profile["last_name"]
+            VKUser.get_or_create(
+                id=id,
+                conversation_id=conversation_id,
+                first_name=first_name,
+                last_name=last_name,
+            )

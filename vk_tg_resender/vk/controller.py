@@ -7,4 +7,8 @@ class Controller:
         records = self.model.fetch_latest_messages_records(
             conversation_id=conversation_id
         )
-        return self.view.parse_messages(records=records)
+        members = self.model.get_conversation_members(conversation_id=conversation_id)
+        return self.view.parse_messages(records=records, members=members)
+
+    def update_conversation_members(self, conversation_id):
+        self.model.update_conversation_members(conversation_id=conversation_id)

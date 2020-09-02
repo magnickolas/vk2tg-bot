@@ -18,12 +18,10 @@ class Model:
         else:
             all_records = []
             from_msg_id = conversation.last_msg_id + 1
-            start_message_id = -1
+            offset = 0
             while True:
                 records = self.api.messages.getHistory(
-                    peer_id=conversation_id,
-                    start_message_id=start_message_id,
-                    count=200,
+                    peer_id=conversation_id, offset=offset, count=200,
                 )["items"]
                 first_history_message = records[-1]
                 all_records.extend(
@@ -31,7 +29,7 @@ class Model:
                 )
                 if from_msg_id >= first_history_message["id"]:
                     break
-                start_message_id = first_history_message["id"] - 1
+                offset += len(records)
             if all_records:
                 last_msg_id = all_records[0]["id"]
                 query = VKConversation.update(last_msg_id=last_msg_id).where(

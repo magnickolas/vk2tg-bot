@@ -1,0 +1,23 @@
+vk:
+  login: 'user@domain.com'
+  password: 'pa55w0rd'
+  # Access token for an authorized application,
+  # e.g. from https://vkhost.github.io/
+  token: 'TOKEN'
+  app-id: 123456
+tg_bot:
+  # Bot token from @BotFather
+  bot_token: 'BOT_TOKEN'
+
+  # Disable whitelist
+  white_list: ~
+
+  # To enable whitelist, uncomment and put ids into the array
+  # white_list: [12345678]
+
+  # NOT USING PROXY
+  proxy_url: ~
+
+  # TO USE PROXY, SET THE TYPE
+  # (HTTP, SOCKS5, SOCKS4), HOST AND PORT
+  # proxy_url: "socks5://127.0.0.1:12345"

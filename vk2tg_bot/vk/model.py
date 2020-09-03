@@ -60,3 +60,15 @@ class Model:
                 first_name=first_name,
                 last_name=last_name,
             )
+
+    def are_all_messages_authors_cached(self, conversation_id, messages_records):
+        authors_ids = set([record["from_id"] for record in messages_records])
+        num_authors_ids = len(authors_ids)
+        num_cached_authors_ids = (
+            VKUser.select()
+            .where(
+                VKUser.id.in_(authors_ids) & (VKUser.conversation_id == conversation_id)
+            )
+            .count()
+        )
+        return num_authors_ids == num_cached_authors_ids

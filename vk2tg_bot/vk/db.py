@@ -9,7 +9,10 @@ class VKConversation(BaseModel):
 
 
 class VKUser(BaseModel):
-    id = IntegerField(unique=True)
+    id = IntegerField()
     conversation_id = IntegerField()
     first_name = TextField()
     last_name = TextField()
+
+    class Meta:
+        indexes = ((("id", "conversation_id"), True),)

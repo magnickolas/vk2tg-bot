@@ -7,6 +7,10 @@ class Controller:
         records = self.model.fetch_latest_messages_records(
             conversation_id=conversation_id
         )
+        if not self.model.are_all_messages_authors_cached(
+            conversation_id=conversation_id, messages_records=records
+        ):
+            self.model.update_conversation_members(conversation_id=conversation_id)
         members = self.model.get_conversation_members(conversation_id=conversation_id)
         return self.view.parse_messages(records=records, members=members)
 

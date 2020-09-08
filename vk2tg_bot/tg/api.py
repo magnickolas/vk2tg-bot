@@ -1,5 +1,8 @@
+from time import sleep
+
 from telegram.bot import Bot
 from telegram.utils.request import Request
+from telegram.error import RetryAfter
 
 from vk2tg_bot.config import CONFIG
 
@@ -15,7 +18,12 @@ class Api:
 
     def send_message(self, chat_id: int, msg_text: str):
         if self.check_white_list(chat_id):
-            self.bot.send_message(chat_id=chat_id, text=msg_text)
+            while True:
+                try:
+                    self.bot.send_message(chat_id=chat_id, text=msg_text)
+                    break
+                except RetryAfter as ex:
+                    sleep(ex.retry_after)
 
 
 def get_api():

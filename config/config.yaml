@@ -1,6 +1,4 @@
 vk:
-  login: 'user@domain.com'
-  password: 'pa55w0rd'
   # Access token for an authorized application,
   # e.g. from https://vkhost.github.io/
   token: 'TOKEN'

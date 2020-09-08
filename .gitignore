@@ -1,6 +1,5 @@
-
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,database
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,python,database
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,database,emacs
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,python,database,emacs
 
 ### Database ###
 *.accdb
@@ -154,6 +153,60 @@ dmypy.json
 # Ignore all local history of files
 .history
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,database
+### Emacs ###
+# -*- mode: gitignore; -*-
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Org-mode
+.org-id-locations
+*_archive
+
+# flymake-mode
+*_flymake.*
+
+# eshell files
+/eshell/history
+/eshell/lastdir
+
+# elpa packages
+/elpa/
+
+# reftex files
+*.rel
+
+# AUCTeX auto folder
+/auto/
+
+# cask packages
+.cask/
+dist/
+
+# Flycheck
+flycheck_*.el
+
+# server auth directory
+/server/
+
+# projectiles files
+.projectile
+
+# directory configuration
+.dir-locals.el
+
+# network security
+/network-security.data
+
+# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,database,emacs
 
 /vk_config.v2.json
+TODO.org
+/tags
+/tags.lock
+/tags.temp

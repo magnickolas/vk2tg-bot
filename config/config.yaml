@@ -2,20 +2,18 @@ vk:
   # Access token for an authorized application,
   # e.g. from https://vkhost.github.io/
   token: 'TOKEN'
-  app-id: 123456
+  app-id: 1234567
 tg_bot:
   # Bot token from @BotFather
-  bot_token: 'BOT_TOKEN'
+  bot-token: 'BOT-TOKEN'
 
-  # Disable whitelist
-  white_list: ~
-
-  # To enable whitelist, uncomment and put ids into the array
-  # white_list: [12345678]
+  # ID of user to forward the messages to
+  # One can find it out by writing to @userinfobot
+  user-id: 1234567890
 
   # NOT USING PROXY
-  proxy_url: ~
+  proxy-url: ~
 
   # TO USE PROXY, SET THE TYPE
   # (HTTP, SOCKS5, SOCKS4), HOST AND PORT
-  # proxy_url: "socks5://127.0.0.1:12345"
+  # proxy-url: "socks5://127.0.0.1:12345"

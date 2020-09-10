@@ -1,6 +1,6 @@
 from vk2tg_bot.vk.api import get_api
-from vk2tg_bot.vk.db import VKConversation
-from vk2tg_bot.vk.db import VKUser
+from vk2tg_bot.vk.db_models import VKConversation
+from vk2tg_bot.vk.db_models import VKUser
 
 
 class Model:
@@ -10,9 +10,9 @@ class Model:
     def fetch_latest_messages_records(self, conversation_id):
         conversation = VKConversation.get_or_none(id=conversation_id)
         if not conversation:
-            records = self.api.messages.getHistory(
-                offset=0, peer_id=conversation_id, count=5
-            )["items"]
+            records = self.fetch_latest_messages_with_offset(
+                conversation_id=conversation_id, offset=0, count=5
+            )
             last_msg_id = records[0]["id"]
             VKConversation.create(id=conversation_id, last_msg_id=last_msg_id)
             return records
@@ -21,9 +21,9 @@ class Model:
             from_msg_id = conversation.last_msg_id + 1
             offset = 0
             while True:
-                records = self.api.messages.getHistory(
-                    peer_id=conversation_id, offset=offset, count=200,
-                )["items"]
+                records = self.fetch_latest_messages_with_offset(
+                    conversation_id=conversation_id, offset=offset, count=200,
+                )
                 first_history_message = records[-1]
                 all_records.extend(
                     filter(lambda record: record["id"] >= from_msg_id, records)
@@ -38,6 +38,11 @@ class Model:
                 )
                 query.execute()
             return all_records
+
+    def fetch_latest_messages_with_offset(self, conversation_id, offset, count):
+        return self.api.messages.getHistory(
+            offset=offset, peer_id=conversation_id, count=count
+        )["items"]
 
     def get_conversation_members(self, conversation_id):
         query = VKUser.select(VKUser.id, VKUser.first_name, VKUser.last_name).where(

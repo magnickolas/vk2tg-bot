@@ -13,6 +13,7 @@ class View:
             text = f"{fullname_by_id[from_id]}:\n{text}"
         reply_record = record.get("reply_message")
         fwd_records = record.get("fwd_messages", [])
+        attachments = record.get("attachments", [])
         if reply_record is not None:
             text += View.parse_inner_message(
                 reply_record, fullname_by_id, "_Reply to_:"
@@ -21,7 +22,19 @@ class View:
             text += View.parse_inner_message(
                 fwd_record, fullname_by_id, "_Forwarded message_:"
             )
+        for attachment in attachments:
+            text += View.parse_attachment(attachment)
+
         return text
+
+    @staticmethod
+    def parse_attachment(attachment):
+        attachment_type = attachment["type"]
+        if attachment_type == "photo":
+            photo_attachment = attachment["photo"]
+            max_scale_photo = max(photo_attachment["sizes"], key=lambda p: p["height"])
+            max_scale_photo_url = max_scale_photo["url"]
+            return f"\nPhoto: {max_scale_photo_url}\n"
 
     @staticmethod
     def parse_inner_message(record, fullname_by_id, prefix):

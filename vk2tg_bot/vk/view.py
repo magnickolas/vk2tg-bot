@@ -35,6 +35,9 @@ class View:
             max_scale_photo = max(photo_attachment["sizes"], key=lambda p: p["height"])
             max_scale_photo_url = max_scale_photo["url"]
             return f"\nPhoto: {max_scale_photo_url}\n"
+        else:
+            print(attachment)
+            return f"Not supported yet attachment of type {attachment_type}"
 
     @staticmethod
     def parse_inner_message(record, fullname_by_id, prefix):

@@ -1,3 +1,7 @@
+from time import sleep
+
+from vk_api.exceptions import ApiError
+
 from vk2tg_bot.vk.api import get_api
 from vk2tg_bot.vk.db_models import VKConversation
 from vk2tg_bot.vk.db_models import VKUser
@@ -40,9 +44,16 @@ class Model:
             return all_records
 
     def fetch_latest_messages_with_offset(self, conversation_id, offset, count):
-        return self.api.messages.getHistory(
-            offset=offset, peer_id=conversation_id, count=count
-        )["items"]
+        messages = None
+        while True:
+            try:
+                messages = self.api.messages.getHistory(
+                    offset=offset, peer_id=conversation_id, count=count
+                )["items"]
+                break
+            except ApiError as ex:
+                sleep(5)
+        return messages
 
     def get_conversation_members(self, conversation_id):
         query = VKUser.select(VKUser.id, VKUser.first_name, VKUser.last_name).where(

@@ -2,6 +2,7 @@ from time import sleep
 
 from telegram import ParseMode
 from telegram.bot import Bot
+from telegram.error import BadRequest
 from telegram.error import RetryAfter
 from telegram.utils.request import Request
 
@@ -16,9 +17,12 @@ class Api:
     def send_message(self, chat_id: int, msg_text: str):
         while True:
             try:
-                return self.bot.send_message(
-                    chat_id=chat_id, text=msg_text, parse_mode=ParseMode.MARKDOWN
-                )
+                try:
+                    return self.bot.send_message(
+                        chat_id=chat_id, text=msg_text, parse_mode=ParseMode.MARKDOWN
+                    )
+                except BadRequest:
+                    return self.bot.send_message(chat_id=chat_id, text=msg_text)
             except RetryAfter as ex:
                 sleep(ex.retry_after)
 
